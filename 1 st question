@@ -1,0 +1,29 @@
+def summarize_weather_data(records):
+    weather_summary = {}
+
+    for record in records:
+        location = record['city']
+        if location not in weather_summary:
+            weather_summary[location] = {'sum_temp': 0, 'temp_entries': 0, 'sum_humidity': 0, 'humidity_entries': 0}
+
+        if 'temperature' in record:
+            weather_summary[location]['sum_temp'] += record['temperature']
+            weather_summary[location]['temp_entries'] += 1
+
+        if 'humidity' in record:
+            weather_summary[location]['sum_humidity'] += record['humidity']
+            weather_summary[location]['humidity_entries'] += 1
+
+    for location, data in weather_summary.items():
+        average_temp = data['sum_temp'] / data['temp_entries'] if data['temp_entries'] > 0 else None
+        average_humidity = data['sum_humidity'] / data['humidity_entries'] if data['humidity_entries'] > 0 else None
+        print(f"City: {location}, Average Temperature: {average_temp}, Average Humidity: {average_humidity}")
+
+data = [
+    {'city': 'CityA', 'temperature': 30, 'humidity': 70},
+    {'city': 'CityA', 'temperature': 32},
+    {'city': 'CityB', 'humidity': 60},
+    {'city': 'CityB', 'temperature': 28, 'humidity': 65}
+]
+
+summarize_weather_data(data)
